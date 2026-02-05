@@ -1,0 +1,98 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1TrueLove.org | Your Path to Forever</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        :root { --primary: #ff4757; --secondary: #764ba2; --dark: #2f3542; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #fff; background: #0f0c29; overflow-x: hidden; }
+        
+        .hero { 
+            position: relative; height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1516589174184-c68526514800?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center;
+        }
+        
+        .hero-content h1 { font-size: 3.5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); margin-bottom: 10px; }
+        .heart { color: var(--primary); display: inline-block; animation: heartbeat 1.5s infinite; }
+        
+        .live-counter { background: rgba(255, 71, 87, 0.9); padding: 10px 25px; border-radius: 50px; font-weight: bold; font-size: 1.1rem; margin-top: 20px; display: inline-block; }
+
+        .container { max-width: 1200px; margin: -80px auto 50px; position: relative; z-index: 10; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .card { background: rgba(255,255,255,0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); padding: 40px; border-radius: 20px; text-align: center; transition: 0.3s; }
+        .card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .price { font-size: 3rem; font-weight: 800; margin: 20px 0; color: #ffd700; }
+        .btn { background: var(--primary); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.1rem; }
+        
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
+        .modal-content { background: white; color: var(--dark); padding: 40px; border-radius: 20px; max-width: 400px; text-align: center; }
+        
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        @media (max-width: 768px) { .hero-content h1 { font-size: 2.5rem; } }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1><span class="heart">💕</span> 1TrueLove.org</h1>
+            <p style="font-size: 1.2rem;">Where Soulmates Find Their Way Home.</p>
+            <div class="live-counter">❤️ <span id="count">12847</span> Singles Found Love This Year</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="grid">
+            <div class="card">
+                <h3>Free</h3>
+                <div class="price">$0</div>
+                <p>Basic Readiness Assessment</p><br>
+                <button class="btn" onclick="showModal('Free')">Get Started</button>
+            </div>
+            <div class="card" style="border: 2px solid var(--primary);">
+                <h3 style="color: var(--primary);">Pro Plan</h3>
+                <div class="price">$14.99</div>
+                <p>AI Compatibility Analysis</p><br>
+                <button class="btn" onclick="showModal('Pro')">Join Now</button>
+            </div>
+            <div class="card">
+                <h3>Elite</h3>
+                <div class="price">$49.99</div>
+                <p>90-Day Success Guarantee</p><br>
+                <button class="btn" onclick="showModal('Elite')">Get Elite</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Welcome!</h2>
+            <p style="margin: 20px 0;">We are currently connecting our secure Stripe gateway. Your journey starts in 24 hours!</p>
+            <button class="btn" onclick="closeModal()">Got it!</button>
+        </div>
+    </div>
+
+    <script>
+        let count = 12847;
+        setInterval(() => {
+            count += Math.floor(Math.random() * 3);
+            document.getElementById('count').innerText = count.toLocaleString();
+        }, 5000);
+
+        function showModal(plan) {
+            document.getElementById('modalTitle').innerText = plan + " Plan Selected!";
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+```
