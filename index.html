@@ -40,7 +40,181 @@
                 <h3>Pro Plan</h3>
                 <div class="price">$14.99</div>
                 <p>AI Compatibility Analysis</p><br>
-                <a href="PASTE_YOUR_PRO_LINK_HERE" class="btn">Join Pro</a>
+                load_dotenv()
+# Initialize Stripe
+stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
+
+def create_products_and_prices():
+    """Create all products and prices in Stripe dashboard"""
+
+    products_to_create = [
+        {
+            'name': 'Relationship Advisor Pro',
+            'description': 'Unlimited assessments, AI insights, progress tracking, and email support',
+            'price': 1499,  # $14.99
+            'interval': 'month',
+            'tier': 'pro'
+        },
+        {
+            'name': 'Relationship Advisor VIP',
+            'description': 'Everything in Pro plus expert consultations, priority support, and advanced analytics',
+            'price': 2999,  # $29.99
+            'interval': 'month',
+            'tier': 'vip'
+        },
+        {
+            'name': 'Relationship Advisor Elite',
+            'description': 'Everything in VIP plus personal AI coach, unlimited consultations, and success guarantee',
+            'price': 4999,  # $49.99
+            'interval': 'month',
+            'tier': 'elite'
+        }
+    ]
+
+    created_products = {}
+
+    for product_data in products_to_create:
+        try:
+            # Create product
+            product = stripe.Product.create(
+                name=product_data['name'],
+                description=product_data['description'],
+                metadata={'tier': product_data['tier']}
+            )
+
+            # Create price
+            price = stripe.Price.create(
+                product=product.id,
+                unit_amount=product_data['price'],
+                currency='usd',
+                recurring={'interval': product_data['interval']},
+                metadata={'tier': product_data['tier']}
+            )
+
+            created_products[product_data['tier']] = {
+                'product_id': product.id,
+                'price_id': price.id,
+                'name': product_data['name'],
+                'amount': product_data['price']
+            }
+
+            print(f"â Created {product_data['name']}")
+            print(f"   Product ID: {product.id}")
+            print(f"   Price ID: {price.id}")
+            print()
+
+        except Exception as e:
+            print(f"â Error creating {product_data['name']}: {str(e)}")
+
+    return created_products
+
+def create_one_time_products():
+    """Create one-time premium service products"""
+
+    services = [
+        {'name': 'Professional Profile Makeover', 'price': 19900, 'key': 'profile_makeover'},
+        {'name': 'Personal Dating Strategy Session', 'price': 14900, 'key': 'strategy_session'},
+        {'name': 'Psychological Compatibility Analysis', 'price': 4999, 'key': 'compatibility_analysis'},
+        {'name': 'Photo Shoot Coordination', 'price': 9900, 'key': 'photo_coordination'},
+        {'name': 'AI Profile Optimization', 'price': 2999, 'key': 'ai_optimization'}
+    ]
+
+    created_services = {}
+
+    for service in services:
+        try:
+            # Create product
+            product = stripe.Product.create(
+                name=service['name'],
+                description=f"One-time premium service: {service['name']}",
+                metadata={'service_type': service['key']}
+            )
+
+            # Create price
+            price = stripe.Price.create(
+                product=product.id,
+                unit_amount=service['price'],
+                currency='usd',
+                metadata={'service_type': service['key']}
+            )
+
+            created_services[service['key']] = {
+                'product_id': product.id,
+                'price_id': price.id,
+                'name': service['name'],
+                'amount': service['price']
+            }
+
+            print(f"â Created service: {service['name']}")
+            print(f"   Product ID: {product.id}")
+            print(f"   Price ID: {price.id}")
+            print()
+
+        except Exception as e:
+            print(f"â Error creating {service['name']}: {str(e)}")
+
+    return created_services
+
+def setup_webhook_endpoint():
+    """Create webhook endpoint in Stripe"""
+
+    webhook_url = input("Enter your webhook URL (e.g., https://yourdomain.com/webhook): ")
+
+    try:
+        webhook = stripe.WebhookEndpoint.create(
+            url=webhook_url,
+            enabled_events=[
+                'payment_intent.succeeded',
+                'payment_intent.payment_failed',
+                'invoice.payment_succeeded',
+                'invoice.payment_failed',
+                'customer.subscription.created',
+                'customer.subscription.updated',
+                'customer.subscription.deleted',
+                'checkout.session.completed'
+            ]
+        )
+
+        print(f"â Webhook endpoint created!")
+        print(f"   Webhook ID: {webhook.id}")
+        print(f"   Secret: {webhook.secret}")
+        print(f"   â ï¸  IMPORTANT: Add this secret to your .env file as STRIPE_WEBHOOK_SECRET")
+
+        return webhook
+
+    except Exception as e:
+        print(f"â Error creating webhook: {str(e)}")
+        return None
+
+if __name__ == "__main__":
+    print("ð STRIPE SETUP FOR RELATIONSHIP ADVISOR ULTIMATE")
+    print("=" * 60)
+
+    if not stripe.api_key:
+        print("â Error: STRIPE_SECRET_KEY not found in environment variables")
+        print("Please add your Stripe secret key to the .env file")
+        exit(1)
+
+    print("Creating subscription products...")
+    subscription_products = create_products_and_prices()
+
+    print("\nCreating one-time service products...")
+    service_products = create_one_time_products()
+
+    print("\nSetting up webhook endpoint...")
+    webhook = setup_webhook_endpoint()
+
+    print("\n" + "=" * 60)
+    print("ð STRIPE SETUP COMPLETE!")
+    print("\nð NEXT STEPS:")
+    print("1. Copy the Price IDs above to your .env file")
+    print("2. Add the webhook secret to your .env file")
+    print("3. Update your app configuration with the new Price IDs")
+    print("4. Test payments with Stripe test cards")
+    print("\nð³ Test Cards:")
+    print("   Success: 4242424242424242")
+    print("   Decline: 4000000000000002")
+    print("   3D Secure: 4000002500003155")
             </div>
             <div class="card" style="border: 2px solid var(--primary);">
                 <h3 style="color: var(--primary);">VIP Plan</h3>
