@@ -5,235 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1TrueLove.org | Your Path to Forever</title>
+    
+    <!-- STEP A: PASTE THE STRIPE SCRIPT TAG HERE (The one that starts with <script async...) -->
+
     <style>
         :root { --primary: #ff4757; --secondary: #764ba2; --dark: #2f3542; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #fff; background: #0f0c29; overflow-x: hidden; }
-        .hero { 
-            position: relative; height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1516589174184-c68526514800?auto=format&fit=crop&w=1920&q=80');
-            background-size: cover; background-position: center;
-        }
-        .hero-content h1 { font-size: 3.5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); margin-bottom: 10px; }
-        .heart { color: var(--primary); display: inline-block; animation: heartbeat 1.5s infinite; }
-        .live-counter { background: rgba(255, 71, 87, 0.9); padding: 10px 25px; border-radius: 50px; font-weight: bold; font-size: 1.1rem; margin-top: 20px; display: inline-block; }
-        .container { max-width: 1200px; margin: -80px auto 50px; position: relative; z-index: 10; padding: 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .card { background: rgba(255,255,255,0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); padding: 40px; border-radius: 20px; text-align: center; transition: 0.3s; }
-        .card:hover { transform: translateY(-10px); border-color: var(--primary); }
-        .price { font-size: 3rem; font-weight: 800; margin: 20px 0; color: #ffd700; }
-        .btn { background: var(--primary); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1.1rem; display: block; text-decoration: none; }
+        body { font-family: 'Segoe UI', sans-serif; color: #fff; background: #0f0c29; text-align: center; }
+        .hero { padding: 60px 20px; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1516589174184-c68526514800?auto=format&fit=crop&w=800&q=80'); background-size: cover; }
+        .heart { color: var(--primary); display: inline-block; animation: heartbeat 1.5s infinite; font-size: 3rem; }
+        .container { max-width: 1100px; margin: 20px auto; padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .price { font-size: 2.5rem; color: #ffd700; margin: 15px 0; font-weight: bold; }
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
     </style>
 </head>
 <body>
     <div class="hero">
-        <div class="hero-content">
-            <h1><span class="heart">💕</span> 1TrueLove.org</h1>
-            <p style="font-size: 1.2rem;">Where Soulmates Find Their Way Home.</p>
-            <div class="live-counter">❤️ <span id="count">12847</span> Singles Found Love This Year</div>
-        </div>
+        <span class="heart">💕</span>
+        <h1>1TrueLove.org</h1>
+        <p>Where Soulmates Find Their Way Home</p>
     </div>
     <div class="container">
-        <div class="grid">
-            <div class="card">
-                <h3>Pro Plan</h3>
-                <div class="price">$14.99</div>
-                <p>AI Compatibility Analysis</p><br>
-                load_dotenv()
-# Initialize Stripe
-stripe.api_key = os.environ.get('STRIPE_SECRET_KEY')
-
-def create_products_and_prices():
-    """Create all products and prices in Stripe dashboard"""
-
-    products_to_create = [
-        {
-            'name': 'Relationship Advisor Pro',
-            'description': 'Unlimited assessments, AI insights, progress tracking, and email support',
-            'price': 1499,  # $14.99
-            'interval': 'month',
-            'tier': 'pro'
-        },
-        {
-            'name': 'Relationship Advisor VIP',
-            'description': 'Everything in Pro plus expert consultations, priority support, and advanced analytics',
-            'price': 2999,  # $29.99
-            'interval': 'month',
-            'tier': 'vip'
-        },
-        {
-            'name': 'Relationship Advisor Elite',
-            'description': 'Everything in VIP plus personal AI coach, unlimited consultations, and success guarantee',
-            'price': 4999,  # $49.99
-            'interval': 'month',
-            'tier': 'elite'
-        }
-    ]
-
-    created_products = {}
-
-    for product_data in products_to_create:
-        try:
-            # Create product
-            product = stripe.Product.create(
-                name=product_data['name'],
-                description=product_data['description'],
-                metadata={'tier': product_data['tier']}
-            )
-
-            # Create price
-            price = stripe.Price.create(
-                product=product.id,
-                unit_amount=product_data['price'],
-                currency='usd',
-                recurring={'interval': product_data['interval']},
-                metadata={'tier': product_data['tier']}
-            )
-
-            created_products[product_data['tier']] = {
-                'product_id': product.id,
-                'price_id': price.id,
-                'name': product_data['name'],
-                'amount': product_data['price']
-            }
-
-            print(f"â Created {product_data['name']}")
-            print(f"   Product ID: {product.id}")
-            print(f"   Price ID: {price.id}")
-            print()
-
-        except Exception as e:
-            print(f"â Error creating {product_data['name']}: {str(e)}")
-
-    return created_products
-
-def create_one_time_products():
-    """Create one-time premium service products"""
-
-    services = [
-        {'name': 'Professional Profile Makeover', 'price': 19900, 'key': 'profile_makeover'},
-        {'name': 'Personal Dating Strategy Session', 'price': 14900, 'key': 'strategy_session'},
-        {'name': 'Psychological Compatibility Analysis', 'price': 4999, 'key': 'compatibility_analysis'},
-        {'name': 'Photo Shoot Coordination', 'price': 9900, 'key': 'photo_coordination'},
-        {'name': 'AI Profile Optimization', 'price': 2999, 'key': 'ai_optimization'}
-    ]
-
-    created_services = {}
-
-    for service in services:
-        try:
-            # Create product
-            product = stripe.Product.create(
-                name=service['name'],
-                description=f"One-time premium service: {service['name']}",
-                metadata={'service_type': service['key']}
-            )
-
-            # Create price
-            price = stripe.Price.create(
-                product=product.id,
-                unit_amount=service['price'],
-                currency='usd',
-                metadata={'service_type': service['key']}
-            )
-
-            created_services[service['key']] = {
-                'product_id': product.id,
-                'price_id': price.id,
-                'name': service['name'],
-                'amount': service['price']
-            }
-
-            print(f"â Created service: {service['name']}")
-            print(f"   Product ID: {product.id}")
-            print(f"   Price ID: {price.id}")
-            print()
-
-        except Exception as e:
-            print(f"â Error creating {service['name']}: {str(e)}")
-
-    return created_services
-
-def setup_webhook_endpoint():
-    """Create webhook endpoint in Stripe"""
-
-    webhook_url = input("Enter your webhook URL (e.g., https://yourdomain.com/webhook): ")
-
-    try:
-        webhook = stripe.WebhookEndpoint.create(
-            url=webhook_url,
-            enabled_events=[
-                'payment_intent.succeeded',
-                'payment_intent.payment_failed',
-                'invoice.payment_succeeded',
-                'invoice.payment_failed',
-                'customer.subscription.created',
-                'customer.subscription.updated',
-                'customer.subscription.deleted',
-                'checkout.session.completed'
-            ]
-        )
-
-        print(f"â Webhook endpoint created!")
-        print(f"   Webhook ID: {webhook.id}")
-        print(f"   Secret: {webhook.secret}")
-        print(f"   â ï¸  IMPORTANT: Add this secret to your .env file as STRIPE_WEBHOOK_SECRET")
-
-        return webhook
-
-    except Exception as e:
-        print(f"â Error creating webhook: {str(e)}")
-        return None
-
-if __name__ == "__main__":
-    print("ð STRIPE SETUP FOR RELATIONSHIP ADVISOR ULTIMATE")
-    print("=" * 60)
-
-    if not stripe.api_key:
-        print("â Error: STRIPE_SECRET_KEY not found in environment variables")
-        print("Please add your Stripe secret key to the .env file")
-        exit(1)
-
-    print("Creating subscription products...")
-    subscription_products = create_products_and_prices()
-
-    print("\nCreating one-time service products...")
-    service_products = create_one_time_products()
-
-    print("\nSetting up webhook endpoint...")
-    webhook = setup_webhook_endpoint()
-
-    print("\n" + "=" * 60)
-    print("ð STRIPE SETUP COMPLETE!")
-    print("\nð NEXT STEPS:")
-    print("1. Copy the Price IDs above to your .env file")
-    print("2. Add the webhook secret to your .env file")
-    print("3. Update your app configuration with the new Price IDs")
-    print("4. Test payments with Stripe test cards")
-    print("\nð³ Test Cards:")
-    print("   Success: 4242424242424242")
-    print("   Decline: 4000000000000002")
-    print("   3D Secure: 4000002500003155")
-            </div>
-            <div class="card" style="border: 2px solid var(--primary);">
-                <h3 style="color: var(--primary);">VIP Plan</h3>
-                
-                <p>Expert Consultation Included</p><br>
-                <
-            </div>
-            <div class="card">
-                <h3>Elite</h3>
-                <div class="price">$49.99</div>
-                <p>90-Day Success Guarantee</p><br>
-                <
-            </div>
+        <div class="card">
+            <h3>Pro Plan</h3>
+            <div class="price">$14.99</div>
+            <!-- STEP B: PASTE THE STRIPE PRO BUTTON CODE HERE -->
+        </div>
+        <div class="card" style="border: 2px solid #ff4757;">
+            <h3 style="color: #ff4757;">VIP Plan</h3>
+            <div class="price">$29.99</div>
+            <!-- STEP C: PASTE THE STRIPE VIP BUTTON CODE HERE -->
+        </div>
+        <div class="card">
+            <h3>Elite Plan</h3>
+            <div class="price">$49.99</div>
+            <!-- STEP D: PASTE THE STRIPE ELITE BUTTON CODE HERE -->
         </div>
     </div>
-    <script>
-        let count = 12847;
-        setInterval(() => { count += Math.floor(Math.random() * 3); document.getElementById('count').innerText = count.toLocaleString(); }, 5000);
-    </script>
 </body>
 </html>
 ```
