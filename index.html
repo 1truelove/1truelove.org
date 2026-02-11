@@ -43,7 +43,15 @@
         <div class="card" style="border: 2px solid #ff4757;">
             <h3 style="color: #ff4757;">VIP Plan</h3>
             <div class="price">$29.99</div>
-            <!-- STEP C: PASTE THE STRIPE VIP BUTTON CODE HERE -->
+            <script async
+  src="https://js.stripe.com/v3/buy-button.js">
+</script>
+
+<stripe-buy-button
+  buy-button-id="buy_btn_1SzRTh3hSacqGl8OyAVkcLD2"
+  publishable-key="pk_live_51SteJd3hSacqGl8OU44R1Ci6vjI20ogKfWmK51K8RguE0n0UjLR3S4QdK2Ct6JGOGNNVFo2blRRkWBgFmFMGkvPr00kgKVcASg"
+>
+</stripe-buy-button>
         </div>
         <div class="card">
             <h3>Elite Plan</h3>
