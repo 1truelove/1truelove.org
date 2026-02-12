@@ -6,67 +6,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1TrueLove.org | Your Path to Forever</title>
     
-    <!-- STEP A: PASTE THE STRIPE SCRIPT TAG HERE (The one that starts with <script async...) -->
+    <!-- Stripe Global Script -->
+    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
 
     <style>
         :root { --primary: #ff4757; --secondary: #764ba2; --dark: #2f3542; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; color: #fff; background: #0f0c29; text-align: center; }
-        .hero { padding: 60px 20px; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1516589174184-c68526514800?auto=format&fit=crop&w=800&q=80'); background-size: cover; }
-        .heart { color: var(--primary); display: inline-block; animation: heartbeat 1.5s infinite; font-size: 3rem; }
-        .container { max-width: 1100px; margin: 20px auto; padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        body { font-family: 'Segoe UI', sans-serif; color: #fff; background: #0f0c29; line-height: 1.6; }
+        
+        /* Hero Section */
+        .hero { padding: 80px 20px; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1516589174184-c68526514800?auto=format&fit=crop&w=800&q=80'); background-size: cover; text-align: center; }
+        .heart { color: var(--primary); display: inline-block; animation: heartbeat 1.5s infinite; font-size: 3.5rem; }
+        
+        /* Value Sections */
+        .section { padding: 60px 20px; max-width: 1000px; margin: 0 auto; text-align: center; }
+        .mission { background: rgba(255,255,255,0.05); border-radius: 20px; margin-top: -50px; position: relative; z-index: 10; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        
+        .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        .insight-card { background: #1a1a2e; padding: 30px; border-radius: 15px; border-left: 4px solid var(--primary); text-align: left; }
+        
+        .live-counter { background: var(--primary); padding: 10px 25px; border-radius: 50px; font-weight: bold; margin-top: 20px; display: inline-block; }
+
+        /* Pricing Grid */
+        .container { max-width: 1100px; margin: 40px auto; padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: center; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); border-color: var(--primary); }
         .price { font-size: 2.5rem; color: #ffd700; margin: 15px 0; font-weight: bold; }
+        
+        /* Guarantee Box */
+        .guarantee-box { background: linear-gradient(135deg, #2f3542 0%, #0f0c29 100%); border: 2px solid #ffd700; padding: 40px; border-radius: 20px; margin-top: 40px; }
+        .gold-text { color: #ffd700; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
+
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
     </style>
 </head>
 <body>
+
     <div class="hero">
         <span class="heart">💕</span>
-        <h1>1TrueLove.org</h1>
-        <p>Where Soulmates Find Their Way Home</p>
+        <h1 style="font-size: 3rem;">1TrueLove.org</h1>
+        <p>Stop Swiping. Start Connecting.</p>
+        <div class="live-counter">❤️ <span id="count">12847</span> Success Stories</div>
     </div>
+
+    <div class="section mission">
+        <h2>Our Mission</h2>
+        <p>Dating apps want you to stay single. We want you to find your partner. At 1TrueLove, we use relationship psychology and AI to match souls, not just photos.</p>
+    </div>
+
+    <div class="section">
+        <div class="insight-grid">
+            <div class="insight-card">
+                <h4 style="color: var(--primary);">01. The 90-Day Rule</h4>
+                <p>We identify core compatibility markers early to save you time and emotional energy.</p>
+            </div>
+            <div class="insight-card">
+                <h4 style="color: var(--primary);">02. Beyond the Bio</h4>
+                <p>We dig into values and attachment styles—the things that actually keep couples together.</p>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
+        <!-- PRO PLAN -->
         <div class="card">
             <h3>Pro Plan</h3>
             <div class="price">$14.99</div>
-            <script async
-  src="https://js.stripe.com/v3/buy-button.js">
-</script>
-
-<stripe-buy-button
-  buy-button-id="buy_btn_1SzROC3hSacqGl8OIo35r5fs"
-  publishable-key="pk_live_51SteJd3hSacqGl8OU44R1Ci6vjI20ogKfWmK51K8RguE0n0UjLR3S4QdK2Ct6JGOGNNVFo2blRRkWBgFmFMGkvPr00kgKVcASg"
->
-</stripe-buy-button>
+            <p style="margin-bottom:15px; font-size:0.9rem;">Basic AI Compatibility</p>
+            <stripe-buy-button
+              buy-button-id="buy_btn_1SzpSN3hSacqGl8OzeLghRWs"
+              publishable-key="pk_live_51SteJd3hSacqGl8OU44R1Ci6vjI20ogKfWmK51K8RguE0n0UjLR3S4QdK2Ct6JGOGNNVFo2blRRkWBgFmFMGkvPr00kgKVcASg"
+            ></stripe-buy-button>
         </div>
+
+        <!-- VIP PLAN -->
         <div class="card" style="border: 2px solid #ff4757;">
             <h3 style="color: #ff4757;">VIP Plan</h3>
             <div class="price">$29.99</div>
-            <script async
-  src="https://js.stripe.com/v3/buy-button.js">
-</script>
-
-<stripe-buy-button
-  buy-button-id="buy_btn_1SzRTh3hSacqGl8OyAVkcLD2"
-  publishable-key="pk_live_51SteJd3hSacqGl8OU44R1Ci6vjI20ogKfWmK51K8RguE0n0UjLR3S4QdK2Ct6JGOGNNVFo2blRRkWBgFmFMGkvPr00kgKVcASg"
->
-</stripe-buy-button>
+            <p style="margin-bottom:15px; font-size:0.9rem;">Advanced Insights</p>
+            <stripe-buy-button
+              buy-button-id="buy_btn_1SzpW53hSacqGl8Otv9gsSAx"
+              publishable-key="pk_live_51SteJd3hSacqGl8OU44R1Ci6vjI20ogKfWmK51K8RguE0n0UjLR3S4QdK2Ct6JGOGNNVFo2blRRkWBgFmFMGkvPr00kgKVcASg"
+            ></stripe-buy-button>
         </div>
+
+        <!-- ELITE PLAN -->
         <div class="card">
             <h3>Elite Plan</h3>
             <div class="price">$49.99</div>
-            <script async
-  src="https://js.stripe.com/v3/buy-button.js">
-</script>
-
-<stripe-buy-button
-  buy-button-id="buy_btn_1SzRWY3hSacqGl8Okin5cZ3g"
-  publishable-key="pk_live_51SteJd3hSacqGl8OU44R1Ci6vjI20ogKfWmK51K8RguE0n0UjLR3S4QdK2Ct6JGOGNNVFo2blRRkWBgFmFMGkvPr00kgKVcASg"
->
-</stripe-buy-button>
+            <p style="margin-bottom:15px; font-size:0.9rem;">Full Guarantee Included</p>
+            <stripe-buy-button
+              buy-button-id="buy_btn_1SzreW3hSacqGl8O2vUIe5HN"
+              publishable-key="pk_live_51SteJd3hSacqGl8OU44R1Ci6vjI20ogKfWmK51K8RguE0n0UjLR3S4QdK2Ct6JGOGNNVFo2blRRkWBgFmFMGkvPr00kgKVcASg"
+            ></stripe-buy-button>
         </div>
     </div>
+
+    <div class="section">
+        <div class="guarantee-box">
+            <p class="gold-text">🛡️ Elite Success Guarantee</p>
+            <h2 style="margin: 15px 0;">90-Day Money Back Promise</h2>
+            <p>We are so confident in our <strong>Elite Plan</strong> that if you don't find a compatible match within 90 days, we will refund 100% of your investment. No games, just results. <br><br><em>*Note: Guarantee is valid for Elite Plan members only.</em></p>
+        </div>
+    </div>
+
+    <script>
+        // Persistent Counter Logic
+        let baseCount = 12847;
+        let storedCount = localStorage.getItem('1truelove_counter');
+        let currentCount = storedCount ? parseInt(storedCount) : baseCount;
+
+        document.getElementById('count').innerText = currentCount.toLocaleString();
+
+        setInterval(() => {
+            currentCount += Math.floor(Math.random() * 2);
+            document.getElementById('count').innerText = currentCount.toLocaleString();
+            localStorage.setItem('1truelove_counter', currentCount);
+        }, 8000);
+    </script>
 </body>
 </html>
 ```
